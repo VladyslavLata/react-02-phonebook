@@ -1,4 +1,4 @@
-import { Box } from 'components/Box/Box';
+import { Box } from '../Box/Box';
 // import PropTypes from 'prop-types';
 import { Title } from './Sectio.styled';
 
