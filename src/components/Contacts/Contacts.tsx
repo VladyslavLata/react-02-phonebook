@@ -1,8 +1,20 @@
-// import PropTypes from 'prop-types';
+import { FC } from "react";
 import { Box } from '../Box/Box';
 import { Button, Number } from './Contacts.styled';
 
-export const Contacts = ({ contacts, onRemoveContact }) => {
+interface IContact {
+  name: string,
+  number: string,
+  id: string
+}
+
+interface IProps {
+  contacts: IContact[],
+  onRemoveContact: {(id:string):void},
+}
+
+
+export const Contacts: FC<IProps> = ({ contacts, onRemoveContact }) => {
   return (
     <Box as="ul" py={4}>
       {contacts.map(({ name, number, id }) => (
@@ -27,14 +39,3 @@ export const Contacts = ({ contacts, onRemoveContact }) => {
     </Box>
   );
 };
-
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.exact({
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//       id: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-//   onRemoveContact: PropTypes.func.isRequired,
-// };

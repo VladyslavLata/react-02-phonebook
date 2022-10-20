@@ -1,34 +1,46 @@
-import { Component } from 'react';
+import { Component, ChangeEvent } from 'react';
 import { Section } from './Section/Section';
 import { PhonebookForm } from './PhonebookForm/PhonebookForm';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
 
-export class App extends Component {
-  state = {
-    contacts: [
+export interface IContact {
+  name: string, number: string, id: string,
+}
+
+interface IState {
+  contacts: IContact[],
+  name: string,
+}
+
+export class App extends Component<{}, IState> {
+  constructor(props: {}) {
+    super(props);
+
+    this.state = {
+      contacts: [
       { id: 'id-5', name: 'Kira Ferato', number: '222-10-20' },
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    name: '',
-  };
+      ],
+      name: ""
+    };
+  }
 
-  reviewNameInContacts = name => {
+
+  reviewNameInContacts = (name: string) => {
     return this.state.contacts.find(contact => contact.name === name);
   };
 
-  addContact = contact => {
-    // console.log(contact);
+  addContact = (contact: IContact) => {
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
     }));
-    console.log(this.state);
   };
 
-  removeContact = removeContactId => {
+  removeContact = (removeContactId: string) => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(
         contact => contact.id !== removeContactId
@@ -36,7 +48,7 @@ export class App extends Component {
     }));
   };
 
-  changeFilter = e => {
+  changeFilter = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ name: e.currentTarget.value.trimStart() });
   };
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { ErrorMessage } from 'formik';
+import { ErrorMessage } from 'formik';
 
 export const LabelName = styled.p`
   margin-bottom: ${p => p.theme.space[2]}px;
@@ -18,6 +18,6 @@ export const AddButton = styled.button`
   }
 `;
 
-// export const E = styled(ErrorMessage)`
-//   color: #454545;
-// `;
+export const ErrorText = styled(ErrorMessage)`
+  color: red;
+`;

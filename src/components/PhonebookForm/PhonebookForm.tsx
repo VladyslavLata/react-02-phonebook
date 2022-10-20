@@ -1,13 +1,10 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
+import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { nanoid } from 'nanoid';
-import { LabelName, AddButton } from './Phonebook.styled';
-import styled from 'styled-components';
+import { FC } from "react";
+import { LabelName, AddButton, ErrorText } from './Phonebook.styled';
+import { IContact } from '../App';
 
-const ErrorText = styled(ErrorMessage)`
-  color: red;
-`;
 
 const schema = yup.object().shape({
   name: yup
@@ -36,8 +33,13 @@ const initialValues = {
   number: '',
 };
 
-export const PhonebookForm = ({ onAddContact, onReviewName }) => {
-  const handleSubmit = (values, actions) => {
+interface IProps {
+  onAddContact: (contact: { name: string, number: string, id: string }) => void,
+  onReviewName: (name: string)=> IContact|undefined,
+}
+
+export const PhonebookForm :FC<IProps> = ({ onAddContact, onReviewName }) => {
+  const handleSubmit = (values:{name:string, number:string}, actions: any) => {
     if (onReviewName(values.name)) {
       alert(`${values.name} is already in contacts.`);
       return;
@@ -62,7 +64,6 @@ export const PhonebookForm = ({ onAddContact, onReviewName }) => {
           <Field
             type="tel"
             name="number"
-            // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           />
           <ErrorText component="p" name="number" />
         </label>
@@ -72,7 +73,4 @@ export const PhonebookForm = ({ onAddContact, onReviewName }) => {
   );
 };
 
-PhonebookForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
-  onReviewName: PropTypes.func.isRequired,
-};
+
